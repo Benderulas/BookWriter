@@ -1,3 +1,8 @@
 ﻿using BookWriter.src;
+using Microsoft.Extensions.Configuration;
 
-var test = new ChatGPTController("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");
+var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+
+var test = new ChatGPTController(config["ChatGPTKey"]);
+
+Console.WriteLine(await test.SendMessage("hi there, what is your name?"));
