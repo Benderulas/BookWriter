@@ -1,18 +1,11 @@
 ﻿using BookWriter.src;
-using Microsoft.Extensions.Configuration;
 using Xceed.Words.NET;
 
-var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+var configManager = new ConfigManager();
+var chatGPTController = new ChatGPTController(configManager.SChatGPTKey);
 
-var chatGPTController = new ChatGPTController(config["ChatGPTKey"]);
-
-
-
-string scenesFileName = @".\scenes.doc";
-string responseFileName = @".\response.doc";
-
-var scenesFile = DocX.Load(scenesFileName);
-var responseFile = DocX.Create(responseFileName);
+var scenesFile = DocX.Load(configManager.SScenesFilePath);
+var responseFile = DocX.Create(configManager.SResponseFilePath);
 
 foreach (var scene in scenesFile.Paragraphs)
 {
